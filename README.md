@@ -3,10 +3,10 @@
 
 > **Official implementation of a research project / manuscript currently under review**
 > 
-> **Authors:**Vida Sadati**<sup>1,*</sup>, **Soodeh Hosseini**<sup>1</sup>, **Morteza Ghassed**<sup>2</sup>
+> **Authors:** Vida Sadati, Soodeh Hosseini, Morteza Ghassed
 > 
-> **Affiliation:** <sup>1</sup> Department of Computer Science, Faculty of Mathematics and Computer, Shahid Bahonar University of Kerman, Kerman, Iran  
-<sup>2</sup> Consultant Radiologist, Department of Interventional and Diagnostic Radiology, St. Johannes Hospital Dortmund, Germany  
+> **Affiliation:** Department of Computer Science, Faculty of Mathematics and Computer, Shahid Bahonar University of Kerman, Kerman, Iran
+> Consultant Radiologist, Department of Interventional and Diagnostic Radiology, St. Johannes Hospital Dortmund, Germany  
 > 
 
 ---

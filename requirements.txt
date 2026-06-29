@@ -1,0 +1,8 @@
+torch
+torchvision
+numpy
+scikit-learn
+tqdm
+pillow
+opencv-python
+--extra-index-url https://download.pytorch.org/whl/cu121

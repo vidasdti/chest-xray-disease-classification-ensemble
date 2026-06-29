@@ -203,4 +203,5 @@ python src/VWMF.py
 ## 📄 License
 
 This repository is provided for academic and research purposes only.
+
 No commercial use, redistribution, or modification is permitted without prior written permission from the author.

@@ -13,16 +13,6 @@
 
 ---
 
-## Paper Status
-
-The manuscript titled:
-
-**"Machine Learning Techniques for Disease Diagnosis: A Case Study on Pulmonary Disease Diagnosis"**
-
-is currently **under review**.
-
----
-
 ## Dataset
 
 This project uses the following publicly available dataset:

@@ -1,6 +1,35 @@
-# Chest X-ray Disease Classification using Deep Learning
+# Chest X-ray Disease Classification using Deep Learning and Ensemble Learning
 
-A comprehensive deep learning framework for multi-class chest X-ray classification using classical ML models, deep CNN architectures, transfer learning, and ensemble fusion techniques.
+**Official implementation of a research project / manuscript currently under review**
+
+---
+
+## Authors
+
+**Vida Sadati**<sup>1,*</sup>, **Soodeh Hosseini**<sup>1</sup>, **Morteza Ghassed**<sup>2</sup>
+
+<sup>1</sup> Department of Computer Science, Faculty of Mathematics and Computer, Shahid Bahonar University of Kerman, Kerman, Iran  
+<sup>2</sup> Consultant Radiologist, Department of Interventional and Diagnostic Radiology, St. Johannes Hospital Dortmund, Germany  
+
+---
+
+## Paper Status
+
+The manuscript titled:
+
+**"Machine Learning Techniques for Disease Diagnosis: A Case Study on Pulmonary Disease Diagnosis"**
+
+is currently **under review**.
+
+---
+
+## Dataset
+
+This project uses the following publicly available dataset:
+
+Kaggle Dataset:  
+https://www.kaggle.com/datasets/omkarmanohardalvi/lungs-disease-dataset-4-types
+
 
 ---
 

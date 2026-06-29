@@ -1,15 +1,13 @@
 # Chest X-ray Disease Classification using Deep Learning and Ensemble Learning
 
-**Official implementation of a research project / manuscript currently under review**
 
----
-
-## Authors
-
-**Vida Sadati**<sup>1,*</sup>, **Soodeh Hosseini**<sup>1</sup>, **Morteza Ghassed**<sup>2</sup>
-
-<sup>1</sup> Department of Computer Science, Faculty of Mathematics and Computer, Shahid Bahonar University of Kerman, Kerman, Iran  
+> **Official implementation of a research project / manuscript currently under review**
+> 
+> **Authors:**Vida Sadati**<sup>1,*</sup>, **Soodeh Hosseini**<sup>1</sup>, **Morteza Ghassed**<sup>2</sup>
+> 
+> **Affiliation:** <sup>1</sup> Department of Computer Science, Faculty of Mathematics and Computer, Shahid Bahonar University of Kerman, Kerman, Iran  
 <sup>2</sup> Consultant Radiologist, Department of Interventional and Diagnostic Radiology, St. Johannes Hospital Dortmund, Germany  
+> 
 
 ---
 

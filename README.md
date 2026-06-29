@@ -3,6 +3,8 @@
 
 > **Official implementation of a research project / manuscript currently under review**
 > 
+> The manuscript titled: **"Machine Learning Techniques for Disease Diagnosis: A Case Study on Pulmonary Disease Diagnosis"**
+> 
 > **Authors:** Vida Sadati, Soodeh Hosseini, Morteza Ghassed
 > 
 > **Affiliation:** Department of Computer Science, Faculty of Mathematics and Computer, Shahid Bahonar University of Kerman, Kerman, Iran

@@ -128,10 +128,10 @@ The following confusion matrices represent model performance on the test set:
 
 ```bash
 pip install -r requirements.txt
-
+```
 ---
 
-##  Usage
+## Usage
 
 ```bash
 # Preprocessing
@@ -155,7 +155,7 @@ python src/convnext_advanced.py
 # Ensemble Evaluation
 python src/VWSF.py
 python src/VWMF.py
-
+```
 
 ---
 # Project Structure

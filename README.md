@@ -218,7 +218,7 @@ https://www.kaggle.com/datasets/omkarmanohardalvi/lungs-disease-dataset-4-types
 
 ---
 
-## 📄 License
+## License
 
 This repository is provided for academic and research purposes only.
 

@@ -13,16 +13,6 @@
 
 ---
 
-## Dataset
-
-This project uses the following publicly available dataset:
-
-Kaggle Dataset:  
-https://www.kaggle.com/datasets/omkarmanohardalvi/lungs-disease-dataset-4-types
-
-
----
-
 ## Overview
 
 This project investigates automated lung disease classification from chest X-ray images using multiple machine learning and deep learning approaches. It includes full pipeline development from preprocessing to advanced ensemble fusion.
@@ -206,6 +196,15 @@ python src/VWMF.py
 ├── requirements.txt
 └── README.md
 ```
+---
+
+## Dataset
+
+This project uses the following publicly available dataset:
+
+Kaggle Dataset:  
+https://www.kaggle.com/datasets/omkarmanohardalvi/lungs-disease-dataset-4-types
+
 
 ---
 

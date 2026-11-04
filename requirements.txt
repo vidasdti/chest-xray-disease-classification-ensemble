@@ -4,5 +4,8 @@ numpy
 scikit-learn
 tqdm
 pillow
+grad-cam
+shap
+lime
 opencv-python
 --extra-index-url https://download.pytorch.org/whl/cu121

@@ -119,7 +119,7 @@ The following confusion matrices represent model performance on the test set:
 - Final Ensemble Fusion
 
 <p align="center">
-  <img src="image/Confusion.png" width="700">
+  <img src="Image/Confusion.png" width="700">
 </p>
 
 ---

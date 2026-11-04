@@ -17,39 +17,52 @@
 
 This project investigates automated lung disease classification from chest X-ray images using multiple machine learning and deep learning approaches. It includes full pipeline development from preprocessing to advanced ensemble fusion.
 
-Key contributions:
+### Key Contributions
+
 - Classical ML vs Deep Learning comparison
 - Multiple CNN architectures (from scratch + pretrained)
 - Advanced training strategies (MixUp, EMA, label smoothing)
 - Transfer learning with ResNet and ConvNeXt
 - Validation-informed ensemble fusion
-- Binary clinical grouping (Pneumonia merging)
+- Class-wise adaptive weighted soft fusion
+- Four-class clinical evaluation (Pneumonia merging)
+- Ablation study of ensemble fusion strategies
+- Explainable AI analysis using Grad-CAM, LIME, and SHAP
 
 ---
 
 ## Classes
 
-- Bacterial Pneumonia (BP)  
-- Viral Pneumonia (VP)  
-- COVID-19 (CV)  
-- Normal (NO)  
-- Tuberculosis (TB)  
+| Class | Description |
+|---|---|
+| BP | Bacterial Pneumonia |
+| VP | Viral Pneumonia |
+| CV | COVID-19 |
+| NO | Normal |
+| TB | Tuberculosis |
 
 ---
 
 ## Pipeline
 
 ### 1. Preprocessing
+
 - Image resizing with aspect ratio preservation
+- Padding-based resizing to 224 × 224 pixels
 - CLAHE-based contrast enhancement
-- Noise reduction and normalization
+- RGB conversion
+- Image normalization using ImageNet statistics
 
 ### 2. Data Augmentation
-- Random rotation
-- Color jitter
-- Random resized cropping
+
+- Random rotation (±5 degrees)
+- Brightness and contrast adjustments
+- Random resized cropping (scale range: 0.92–1.00)
+- Five augmented versions generated for each original training image
+- Augmentation applied only to the training set
 
 ### 3. Models
+
 - Decision Tree (baseline ML)
 - SVM
 - FFNN
@@ -60,25 +73,49 @@ Key contributions:
 - ConvNeXt-Tiny
 
 ### 4. Advanced Training Techniques
-- MixUp augmentation
+
 - Label smoothing
 - Exponential Moving Average (EMA)
-- Cosine annealing scheduler
 - Gradient clipping
+- AdamW optimizer
+- Early stopping based on validation Macro-F1
 
 ### 5. Ensemble Learning
+
 - Validation-informed weighted soft fusion
-- Multi-model probability aggregation
-- Class-wise adaptive weighting
+- ResNet50 and ConvNeXt-Tiny probability aggregation
+- Class-specific recall-based weighting
+- Equal-weight soft fusion as a baseline
+- Four-class evaluation through Pneumonia category merging
 
 ---
 
+## Dataset
+
+This project uses the following publicly available dataset:
+
+**Kaggle Dataset:**  
+[Lung Disease Dataset](https://www.kaggle.com/datasets/omkarmanohardalvi/lungs-disease-dataset-4-types)
+
+A total of **10,095 chest X-ray images** were used in the experiments.
+
+### Dataset Distribution
+
+| Subset | Number of Images |
+|---|---:|
+| Training | 6,054 |
+| Validation | 2,016 |
+| Test | 2,025 |
+| **Total** | **10,095** |
+
+The original training, validation, and test subsets were maintained throughout the experiments.
+
 ## Experimental Results
 
-### Table 1: Model Comparison
+### Table 1. Model Comparison
 
-| Model         | Accuracy (%) | Macro-F1 (%) |
-|--------------|-------------|--------------|
+| Model | Accuracy (%) | Macro-F1 (%) |
+|---|---:|---:|
 | Decision Tree | 66.22 | 66.40 |
 | SVM | 87.51 | 87.34 |
 | FFNN | 86.47 | 86.28 |
@@ -87,27 +124,36 @@ Key contributions:
 | ResNet18 | 89.88 | 89.78 |
 | ResNet50 | 91.31 | 91.21 |
 | ConvNeXt-Tiny | 91.95 | 91.81 |
-| **Fusion Model** | **92.20** | **92.08** |
+| **Fusion Model** | **92.79** | **92.69** |
 
----
-
-### Table 2: Class-wise Performance (Best Models)
+### Table 2. Class-wise Performance (F1-score %)
 
 | Model | BP | VP | CV | NO | TB |
-|------|----|----|----|----|----|
-| ResNet50 | 82.32 | 99.01 | 94.90 | 99.88 | 99.88 |
-| ConvNeXt-Tiny | 84.16 | 79.63 | 95.63 | 92.91 | 97.42 |
-| Fusion | 84.77 | 99.63 | 95.78 | 99.75 | 100.00 |
+|---|---:|---:|---:|---:|---:|
+| ResNet50 | 82.32 | 99.01 | 94.90 | 99.88 | 79.20 |
+| ConvNeXt-Tiny | 84.16 | 99.51 | 95.16 | 99.88 | 79.63 |
+| **Fusion** | **85.85** | **99.63** | **95.78** | **99.88** | **81.95** |
 
----
+### Table 3. Ablation Study of Fusion Strategies
 
-### Table 3: Binary Fusion (BP + VP → Pneumonia)
+| Fusion Configuration | Accuracy (%) | Macro-F1 (%) |
+|---|---:|---:|
+| ResNet50 | 91.31 | 91.21 |
+| ConvNeXt-Tiny | 91.95 | 91.81 |
+| Equal-weight Soft Fusion | 92.49 | 92.35 |
+| **Proposed Recall-weighted Soft Fusion** | **92.79** | **92.69** |
+
+The proposed recall-weighted fusion achieved the highest accuracy and Macro-F1 score.
+
+### Table 4. Four-Class Evaluation (BP + VP → Pneumonia)
 
 | Model | Accuracy (%) | Macro-F1 (%) |
-|------|-------------|--------------|
-| Fusion | 98.12 | 98.23 |
+|---|---:|---:|
+| **Fusion** | **98.32** | **98.41** |
 
----
+Bacterial Pneumonia (BP) and Viral Pneumonia (VP) were merged into a single Pneumonia category.
+
+> **Note:** The four-class evaluation is reported separately from the original five-class classification task. The higher performance reflects the change in class definitions rather than improved discrimination between bacterial and viral pneumonia.
 
 ## Confusion Matrices
 
@@ -115,29 +161,93 @@ The following confusion matrices represent model performance on the test set:
 
 - ResNet50
 - ConvNeXt-Tiny
-- Fusion (Pneumonia-aware)
-- Final Ensemble Fusion
+- Five-class Fusion
+- Four-class Fusion (Pneumonia-aware)
 
 <p align="center">
-  <img src="Image/Confusion.png" width="700">
+  <img src="Image/Confusion.png" width="900" alt="Confusion Matrices">
 </p>
 
 ---
 
+## Explainable AI (XAI) Analysis
+
+To investigate the features influencing deep learning predictions, three explainability methods were applied to ResNet50 and ConvNeXt-Tiny.
+
+### 1. Grad-CAM
+
+Gradient-weighted Class Activation Mapping (Grad-CAM) generates heatmaps highlighting image regions associated with a target class prediction.
+
+### 2. LIME
+
+Local Interpretable Model-agnostic Explanations (LIME) examines the influence of different image segments on individual predictions.
+
+### 3. SHAP
+
+SHapley Additive exPlanations (SHAP) estimates the contribution of input features to model predictions and generates class-specific attribution maps.
+
+### Explainability Results
+
+**Grad-CAM and LIME Visualizations**
+
+<p align="center">
+  <img src="Image/GradCAM_LIME.png" width="900" alt="Grad-CAM and LIME Explanations">
+</p>
+
+**SHAP Visualizations**
+
+<p align="center">
+  <img src="Image/SHAP.png" width="900" alt="Class-specific SHAP Explanations">
+</p>
+
+> **Note:** Replace the image paths above with the actual filenames of the generated explainability figures.
+
+These visualizations provide a qualitative assessment of model behavior. They do not establish clinical correctness or demonstrate that the models rely exclusively on medically meaningful image features.
+
+---
+
+
 ## Key Findings
 
-- ConvNeXt-Tiny and ResNet50 outperform classical ML models significantly
-- Ensemble fusion improves stability and overall accuracy
-- Class-wise weighting improves performance on minority classes
-- Merging BP + VP improves pneumonia detection performance significantly
+- ConvNeXt-Tiny and ResNet50 outperform classical ML models significantly.
+- Ensemble fusion improves overall classification performance.
+- Class-specific recall weighting provides better results than equal-weight fusion.
+- The proposed fusion model achieves 92.79% accuracy and 92.69% Macro-F1.
+- Merging BP and VP into a single Pneumonia category improves the four-class evaluation performance.
+- Grad-CAM, LIME, and SHAP provide complementary perspectives on model predictions.
+- Visual explanations reveal that some predictions may be influenced by image regions outside the lung fields.
+
+---
+
+## Limitations and Generalizability
+
+Despite the promising experimental results, several limitations should be considered:
+
+- The experiments were conducted using a single publicly available dataset.
+- External and multicenter validation has not been performed.
+- Explainability methods were evaluated qualitatively without comparison against expert annotations or radiologist assessments.
+- No prospective clinical evaluation or clinician assessment was conducted.
+- The results do not establish clinical readiness or suitability for real-world diagnostic deployment.
+
+Further research should include external validation, expert evaluation of explainability results, and assessment under different clinical imaging conditions.
 
 ---
 
 ## Installation
 
+Clone the repository:
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd <YOUR_REPOSITORY_NAME>
+```
+
+Install the required dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
+
 ---
 
 ## Usage
@@ -167,54 +277,59 @@ python src/VWMF.py
 ```
 
 ---
-# Project Structure
 
-```
+## Project Structure
+
+```text
 .
 ├── preprocessing/
-│    ├── augment_images.py
-│    ├── preprocess_images.py
+│   ├── augment_images.py
+│   └── preprocess_images.py
 │
 ├── src/
-│    ├── dataset.py
-│    ├── cnn.py
-│    ├── svm.py
-│    ├── decision_tree.py
-│    ├── FFNN.py
-│    ├── vgg.py
-│    ├── resnet18.py
-│    ├── resnet50.py
-│    ├── resnet50_advanced.py
-│    ├── convnext.py
-│    ├── convnext_advanced.py
-│    ├── VWSF.py
-│    ├── VWMF.py
+│   ├── dataset.py
+│   ├── cnn.py
+│   ├── svm.py
+│   ├── decision_tree.py
+│   ├── FFNN.py
+│   ├── vgg.py
+│   ├── resnet18.py
+│   ├── resnet50.py
+│   ├── resnet50_advanced.py
+│   ├── convnext.py
+│   ├── convnext_advanced.py
+│   ├── VWSF.py
+│   └── VWMF.py
 │
-├── image/
+├── Image/
+│   ├── Confusion.png
+│   ├── GradCAM_LIME.png
+│   └── SHAP.png
 │
 ├── config.py
 ├── requirements.txt
 └── README.md
 ```
+
 ---
 
-## Dataset
+## Reproducibility
 
-This project uses the following publicly available dataset:
-
-Kaggle Dataset:  
-https://www.kaggle.com/datasets/omkarmanohardalvi/lungs-disease-dataset-4-types
-
+- Experiments use predefined training, validation, and test subsets.
+- Random seed settings are managed through `config.py`.
+- Validation Macro-F1 is used for model checkpoint selection.
+- Fusion weights are calculated exclusively using validation-set performance.
+- The held-out test set is reserved for final model evaluation.
 
 ---
 
 ## Notes
 
-- Designed for research and academic use only  
-- Fully reproducible using `config.py` seed settings  
-- Supports classical machine learning, deep learning, and ensemble learning pipelines  
-- Optimized for medical image classification tasks  
-- Easily extendable to other radiology or medical imaging datasets  
+- Designed for research and academic use only.
+- Fully reproducible using `config.py` seed settings.
+- Supports classical machine learning, deep learning, and ensemble learning pipelines.
+- Optimized for medical image classification research tasks.
+- Easily extendable to other radiology or medical imaging datasets.
 
 ---
 
